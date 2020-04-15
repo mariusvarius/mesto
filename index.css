@@ -147,6 +147,10 @@
     display: none;
 }
 
+.popup__is_active {
+    display: flex;
+}
+
 .popup__container {
     height: 330px;
     width: 430px;
