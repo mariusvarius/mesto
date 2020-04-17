@@ -1,0 +1,14 @@
+.add-icon {
+    width: 150px;
+    height: 50px;
+    vertical-align: baseline;
+}
+
+@media screen and (max-width: 950px) {
+    .add-icon {
+        width: 100%;
+        height: 50px;
+        vertical-align: baseline;
+        content: url(../../img/add-button-large.svg);
+    }
+}
