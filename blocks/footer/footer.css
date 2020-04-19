@@ -1,3 +1,4 @@
+@import url(./__copyright/footer__copyright.css);
 .footer {
     margin: 60px auto 60px auto;
     width: calc(100% - 40px);

@@ -1,0 +1,15 @@
+.save-button {
+    background-color: black;
+    width: 100%;
+    color: white;
+    max-width: 358px;
+    height: 50px;
+    margin-top: 40px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    opacity: 0.8;
+    transition: opacity 0.15s ease-in-out;
+}

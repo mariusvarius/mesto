@@ -1,3 +1,8 @@
 .edit-button {
     display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: baseline;
+    margin-left: 18px;
+    background-image: url(../../img/edit-button.svg);
 }
