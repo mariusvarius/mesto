@@ -11,4 +11,4 @@ html, css, javascript
 
 Работа отправляется на код-ревью
 
-## Ссылка на проект: https://github.com/mariusvarius/mesto.git
+## Ссылка на проект: https://mariusvarius.github.io/mesto/
