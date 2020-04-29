@@ -1,29 +1,128 @@
 const editButton = document.querySelector(".edit-button");
-const closeButton = document.querySelector(".close-button");
+const closeButtonProfile = document.querySelector("#close-button-profile");
+const closeButtonPlace = document.querySelector("#close-button-place");
+const addButton = document.querySelector(".add-button");
 const popup = document.querySelector(".popup");
+const profilePopup = document.querySelector("#profile-popup");
+const placePopup = document.querySelector("#place-popup");
 const title = document.querySelector(".profile__title");
 const subtitle = document.querySelector(".profile__subtitle");
-const saveButton = document.querySelector(".save-button");
-
+const saveButtonProfile = document.querySelector("#save-button-profile");
+const saveButtonPlace = document.querySelector("#save-button-place");
+const cardsContainer = document.querySelector(".cards");
+const deleteButton = document.querySelector(".remove-button");
+const initialCards = [{
+        name: "Архыз",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+    },
+    {
+        name: "Челябинская область",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+    },
+    {
+        name: "Иваново",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+    },
+    {
+        name: "Камчатка",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+    },
+    {
+        name: "Холмогорский район",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+    },
+    {
+        name: "Байкал",
+        link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+    },
+];
 let newTitle = document.querySelector(".popup__input_data_name");
 let newSubtitle = document.querySelector(".popup__input_data_job");
+let newPlace = document.querySelector(".popup__input_data_place");
+let newLink = document.querySelector(".popup__input_data_link");
 
-function popupActivate() {
-    popup.classList.add("popup_opened");
+// Функция изначального добавления карточек
+
+function initialAddCards(item, index) {
+    const cardTemplate = document.querySelector("#card-template").content;
+    let cardItem = cardTemplate.cloneNode(true);
+    cardItem.querySelector(".card__name").textContent = item.name;
+    cardItem.querySelector(".card__picture").src = item.link;
+    cardItem.querySelector(".card").setAttribute("id", index);
+    cardsContainer.append(cardItem);
+}
+
+function renderCards() {
+    initialCards.forEach(initialAddCards);
+
+    document.querySelectorAll(".remove-button").forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", handleDelete);
+    });
+}
+renderCards();
+
+// Удаление карточки
+
+function handleDelete(event) {
+    const index = event.target.parentNode.getAttribute("id");
+    initialCards.splice(index, 1);
+    cardsContainer.innerHTML = "";
+    renderCards();
+}
+
+// Добавление в исходный массив новой карточки
+
+function addItem() {
+    let newItem = {
+        name: newPlace.value,
+        link: newLink.value,
+    };
+    newPlace.value = "";
+    newLink.value = "";
+    initialCards.unshift(newItem);
+    cardsContainer.innerHTML = "";
+    renderCards();
+    placePopupDisable();
+}
+
+saveButtonPlace.addEventListener("click", addItem);
+
+// Активация попапа для профайла
+
+function profilePopupActivate() {
+    profilePopup.classList.add("popup_opened");
     newTitle.value = title.innerText;
     newSubtitle.value = subtitle.innerText;
 }
-editButton.addEventListener("click", popupActivate);
+editButton.addEventListener("click", profilePopupActivate);
 
-function popupDisable() {
-    popup.classList.remove("popup_opened");
+// Активация попапа для карточки
+
+function placePopupActivate() {
+    placePopup.classList.add("popup_opened");
 }
-closeButton.addEventListener("click", popupDisable);
+addButton.addEventListener("click", placePopupActivate);
+
+// Закрытие попапа для профайла
+
+function profilePopupDisable() {
+    profilePopup.classList.remove("popup_opened");
+}
+closeButtonProfile.addEventListener("click", profilePopupDisable);
+
+// Закрытие попапа для карточки
+
+function placePopupDisable() {
+    placePopup.classList.remove("popup_opened");
+}
+closeButtonPlace.addEventListener("click", placePopupDisable);
+
+// Сохранение информации профайла на странице, закрытие попапа
 
 function renameForm() {
     title.innerText = newTitle.value;
     subtitle.innerText = newSubtitle.value;
-    popupDisable();
+    profilePopupDisable();
 }
 
-saveButton.addEventListener("click", renameForm);
+saveButtonProfile.addEventListener("click", renameForm);
