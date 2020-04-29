@@ -70,7 +70,7 @@ function handleDelete(event) {
     renderCards();
 }
 
-// Добавление в исходный массив новой карточки
+// Добавление новой карточки на страницу через массив
 
 function addItem() {
     let newItem = {
