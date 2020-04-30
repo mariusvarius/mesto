@@ -1,0 +1,6 @@
+.like-button_mode_active {
+    background-image: url(../../../img/like-active.svg);
+    width: 21px;
+    height: 18px;
+    align-self: center;
+}

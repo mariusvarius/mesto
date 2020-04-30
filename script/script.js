@@ -11,6 +11,7 @@ const saveButtonProfile = document.querySelector("#save-button-profile");
 const saveButtonPlace = document.querySelector("#save-button-place");
 const cardsContainer = document.querySelector(".cards");
 const deleteButton = document.querySelector(".remove-button");
+const likeButton = document.querySelector(".like-button");
 const initialCards = [{
         name: "Архыз",
         link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
@@ -49,8 +50,16 @@ function initialAddCards(item, index) {
     cardItem.querySelector(".card__name").textContent = item.name;
     cardItem.querySelector(".card__picture").src = item.link;
     cardItem.querySelector(".card").setAttribute("id", index);
+    cardItem
+        .querySelector(".like-button")
+        .addEventListener("click", function(evt) {
+            evt.target.classList.toggle("like-button_mode_active");
+            evt.target.classList.toggle("like-button");
+        });
     cardsContainer.append(cardItem);
 }
+
+// Обработчик удаления на каждую карточку
 
 function renderCards() {
     initialCards.forEach(initialAddCards);

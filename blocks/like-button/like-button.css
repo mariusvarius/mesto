@@ -1,6 +1,7 @@
+@import url(./_mode/like-button_mode_active.css);
 .like-button {
     width: 21px;
     height: 18px;
-    background-image: url(../../img/like.svg);
     align-self: center;
+    background-image: url(../../img/like.svg);
 }
