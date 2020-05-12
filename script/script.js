@@ -149,6 +149,8 @@ function renameForm() {
 
 saveButtonProfile.addEventListener("click", renameForm);
 
+// Закрытие попапа с карточкой
+
 function closePicPopup() {
     picturePopup.classList.remove("popup_opened");
 }

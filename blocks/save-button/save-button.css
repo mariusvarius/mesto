@@ -13,3 +13,13 @@
     opacity: 0.8;
     transition: opacity 0.15s ease-in-out;
 }
+
+@media screen and (max-width: 600px) {
+    .save-button {
+        max-width: 200px;
+        height: 40px;
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
