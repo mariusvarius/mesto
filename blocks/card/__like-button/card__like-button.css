@@ -1,0 +1,9 @@
+@import url(./_mode/card__like-button_mode_active.css);
+.card__like-button {
+    width: 21px;
+    height: 18px;
+    align-self: center;
+    background-image: url(../../../img/like.svg);
+    background-color: white;
+    border: none;
+}

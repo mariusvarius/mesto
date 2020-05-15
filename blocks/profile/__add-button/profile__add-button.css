@@ -1,21 +1,22 @@
-.add-button {
-    width: 150px;
+.profile__add-button {
+    width: 144px;
     height: 50px;
     vertical-align: baseline;
-    background-image: url(../../img/add-button.svg);
+    background-image: url(../../../img/add-button.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 105%;
-    border: 1px solid white;
+    background-size: 100%;
+    border: none;
     border-radius: 1.5px;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 @media screen and (max-width: 950px) {
-    .add-button {
+    .profile__add-button {
         height: 50px;
         width: 282px;
         vertical-align: baseline;
         margin-top: 36px;
-        background-image: url(../../img/add-button-large.svg);
+        background-image: url(../../../img/add-button-large.svg);
     }
 }

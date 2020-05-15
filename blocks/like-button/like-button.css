@@ -1,7 +1,0 @@
-@import url(./_mode/like-button_mode_active.css);
-@import url(./_mode/like-button_mode_disable.css);
-.like-button {
-    width: 21px;
-    height: 18px;
-    align-self: center;
-}

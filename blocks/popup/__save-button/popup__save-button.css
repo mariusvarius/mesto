@@ -1,4 +1,4 @@
-.save-button {
+.popup__save-button {
     background-color: black;
     width: 100%;
     color: white;
@@ -9,13 +9,8 @@
     cursor: pointer;
 }
 
-.save-button:hover {
-    opacity: 0.8;
-    transition: opacity 0.15s ease-in-out;
-}
-
 @media screen and (max-width: 600px) {
-    .save-button {
+    .popup__save-button {
         max-width: 200px;
         height: 40px;
         margin-top: 10px;
