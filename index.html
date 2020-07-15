@@ -43,6 +43,7 @@
               minlength="2"
               maxlength="40"
               id="popup__input_data_name"
+              required
             >
             <span class="popup__input-error" id='popup__input_data_name-error'></span>
           </label>
@@ -54,12 +55,13 @@
               minlength="2"
               maxlength="200"
               id="popup__input_data_job"
+              required
             >
             <span class="popup__input-error" id='popup__input_data_job-error'></span>
           </label class='form__control'>
           <button
-            class="popup__save-button button"
-            id="save-button-profile popup__save-button_disabled"
+            class="popup__save-button"
+            id="save-button-profile"
             type="submit"
           >
             Сохранить
@@ -85,6 +87,7 @@
               minlength="1"
               maxlength="30"
               id='popup__input_data_place'
+              required
             >
             <span class="popup__input-error" id='popup__input_data_place-error'></span>
           </label>
@@ -94,11 +97,13 @@
               type="url"
               placeholder="Ссылка на картинку"
               id='popup__input_data_link'
+              minlength="1"
+              required
             >
             <span class="popup__input-error" id='popup__input_data_link-error'></span>
           </label>
           <button
-            class="popup__save-button button"
+            class="popup__save-button button popup__save-button_disabled"
             id="save-button-place"
             type="submit"
           >
