@@ -12,6 +12,7 @@
 @import url(./__input/popup__input.css);
 @import url(./__input-error/popup__input-error.css);
 @import url(./__input-error/_mode/popup__input-error_mode_active.css);
+@import url(./__fieldset/popup__fieldset.css);
 .popup {
   position: absolute;
   width: 100%;

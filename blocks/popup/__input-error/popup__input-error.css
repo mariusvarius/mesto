@@ -7,4 +7,6 @@
   font-size: 12px;
   line-height: 15px;
   visibility: hidden;
+  box-sizing: border-box;
+  height: 25px;
 }
