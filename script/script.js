@@ -57,19 +57,29 @@ function likeCard(evt) {
 }
 
 //Закрытие попапа по нажатию "Esc"
-function closeByEsc(evt, popupElement) {
+function closeByEsc(evt) {
   if (evt.key === "Escape") {
-    popupElement.removeEventListener("keydown", closeByEsc);
-    popupElement.classList.toggle("popup_disabled");
+    const popupElement = document.querySelector(".popup_opened");
+    popupDisable(popupElement);
   }
 }
-
-// Открытие/закрытие попапа
+// Открытие попапа
 function popupActivate(popupElement) {
+  popupElement.classList.add("popup_opened");
+}
+
+// Закрытие попапа
+function popupDisable(popupElement) {
+  popupElement.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeByEsc);
+}
+
+//Обработчик попапа
+function popupHandler(popupElement) {
   // Определение попапа для профиля, проверка на скрытое состояние
   if (
     popupElement.classList.contains("popup_type_profile") &&
-    popupElement.classList.contains("popup_disabled")
+    !popupElement.classList.contains("popup_opened")
   ) {
     // Обновление информации из профиля
     profileNameInput.value = title.textContent;
@@ -78,15 +88,17 @@ function popupActivate(popupElement) {
   // Определение попапа для карточки, проверка на скрытое состояние
   if (
     popupElement.classList.contains("popup_type_place") &&
-    popupElement.classList.contains("popup_disabled")
+    !popupElement.classList.contains("popup_opened")
   ) {
     // Удаление ранее введенных данных
     placeNameInput.value = "";
     placeLinkInput.value = "";
   }
-  // Переключение состояния попапа
-  popupElement.classList.toggle("popup_disabled");
-  popupElement.addEventListener("keydown", closeByEsc);
+  popupElement
+    .querySelector(".popup__close-button")
+    .addEventListener("click", () => popupDisable(popupElement));
+  document.addEventListener("keydown", closeByEsc);
+  popupActivate(popupElement);
 }
 
 // Увеличение изображения
@@ -94,6 +106,7 @@ function zoomImage(evt) {
   bigImagePlace.src = evt.target.src;
   bigImagePlace.alt = evt.target.alt;
   bigImageCapture.textContent = evt.target.alt;
+  document.addEventListener("keydown", closeByEsc);
   popupActivate(popupImage);
 }
 
@@ -146,7 +159,7 @@ function addCardSubmitHandler(evt) {
     link: placeLinkInput.value,
   });
   addCards([newCard]);
-  popupActivate(placePopup);
+  popupDisable(placePopup);
 }
 
 // Обработчик изменения данных профиля
@@ -154,13 +167,13 @@ function renameFormSubmitHandler(evt) {
   evt.preventDefault();
   title.textContent = profileNameInput.value;
   subtitle.textContent = profileJobInput.value;
-  popupActivate(profilePopup);
+  popupDisable(profilePopup);
 }
 
 //Функция закрытия попапа по клику на оверлей
 function clickByOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    popupActivate(evt.currentTarget);
+    popupDisable(evt.currentTarget);
   }
 }
 
@@ -173,13 +186,10 @@ function setPopupEventListeners() {
 }
 
 // Слушатель для закрытия увеличенного изображения
-closeButtonPicture.addEventListener("click", () => popupActivate(popupImage));
+closeButtonPicture.addEventListener("click", () => popupDisable(popupImage));
 
 // Слушатель для открытия попапа места (карточки)
-addButton.addEventListener("click", () => popupActivate(placePopup));
-
-// Слушатель для закрытия попапа места (карточки)
-closeButtonPlace.addEventListener("click", () => popupActivate(placePopup));
+addButton.addEventListener("click", () => popupHandler(placePopup));
 
 // Слушатель на форму добавления карточки
 placeForm.addEventListener("submit", addCardSubmitHandler);
@@ -188,10 +198,7 @@ placeForm.addEventListener("submit", addCardSubmitHandler);
 profileForm.addEventListener("submit", renameFormSubmitHandler);
 
 // Слушатель для открытия попапа профиля
-editButton.addEventListener("click", () => popupActivate(profilePopup));
-
-// Слушатель для закрытия попапа профиля
-closeButtonProfile.addEventListener("click", () => popupActivate(profilePopup));
+editButton.addEventListener("click", () => popupHandler(profilePopup));
 
 // Добавление начальных карточек
 addCards(renderCards(initialCards));
