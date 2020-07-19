@@ -18,36 +18,29 @@ const bigImagePlace = document.querySelector(".popup__big-picture");
 const bigImageCapture = document.querySelector(".popup__capture");
 const placeForm = document.querySelector("#popup-place");
 const profileForm = document.querySelector("#popup-profile");
-const initialCards = [
-  {
+const initialCards = [{
     name: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
   },
   {
     name: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
   },
   {
     name: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
   },
   {
     name: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
   },
   {
     name: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
   },
   {
     name: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
 
@@ -74,6 +67,20 @@ function popupDisable(popupElement) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
+//Изначальная инактивация кнопки сабмита
+function inactivateSubmitButton(popupElement) {
+  const submitButton = popupElement.querySelector('.popup__save-button');
+  submitButton.setAttribute('disabled', false);
+  submitButton.classList.add('popup__save-button_disabled');
+}
+
+//Изначальная активация кнопки сабмита
+function activateSubmitButton(popupElement) {
+  const submitButton = popupElement.querySelector('.popup__save-button');
+  submitButton.removeAttribute('disabled');
+  submitButton.classList.remove('popup__save-button_disabled');
+}
+
 //Обработчик попапа
 function popupHandler(popupElement) {
   // Определение попапа для профиля, проверка на скрытое состояние
@@ -84,6 +91,7 @@ function popupHandler(popupElement) {
     // Обновление информации из профиля
     profileNameInput.value = title.textContent;
     profileJobInput.value = subtitle.textContent;
+    activateSubmitButton(popupElement);
   }
   // Определение попапа для карточки, проверка на скрытое состояние
   if (
@@ -93,6 +101,7 @@ function popupHandler(popupElement) {
     // Удаление ранее введенных данных
     placeNameInput.value = "";
     placeLinkInput.value = "";
+    inactivateSubmitButton(popupElement);
   }
   popupElement
     .querySelector(".popup__close-button")
