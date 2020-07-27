@@ -1,3 +1,9 @@
+import {
+    closeByEsc,
+    popupActivate,
+    popupDisable
+} from '../script/index.js';
+
 export class Card {
     constructor(name, link, cardSelector) {
         this._name = name;
@@ -31,8 +37,9 @@ export class Card {
         this._element = this._getTemplate();
         this._setEventListeners();
         this._element.querySelector(".card__name").textContent = this._name;
-        this._element.querySelector(".card__picture").src = this._link;
-        this._element.querySelector(".card__picture").alt = this._name;
+        const cardPic = this._element.querySelector(".card__picture");
+        cardPic.src = this._link;
+        cardPic.alt = this._name;
         return this._element;
     }
 
@@ -61,11 +68,12 @@ export class Card {
     }
 
     _zoomImage() {
-        document.querySelector(".popup__big-picture").src = this._link;
-        document.querySelector(".popup__big-picture").alt = this._name;
-        document.querySelector(".popup__capture").textContent = this._name;
-        document.querySelector(".popup_type_picture").classList.add("popup_opened");
-    }
-
-
+        const popupPicElement = document.querySelector(".popup_type_picture");
+        const popupPicture = document.querySelector(".popup__big-picture");
+        popupPicture.src = this._link;
+        popupPicture.alt = this._name;
+        popupPicElement.querySelector(".popup__capture").textContent = this._name;
+        popupActivate(popupPicElement);
+        document.addEventListener("keydown", closeByEsc);
+    };
 }

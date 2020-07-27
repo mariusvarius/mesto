@@ -69,25 +69,21 @@ const startValidationPlace = newValidationPlace.enableValidation();
 const newValidationProfile = new FormValidator(config, profileForm);
 const startValidationProfile = newValidationProfile.enableValidation();
 
-// Лайк карточки
-function likeCard(evt) {
-  evt.target.classList.toggle("card__like-button_mode_active");
-}
 
 //Закрытие попапа по нажатию "Esc"
-function closeByEsc(evt) {
+export function closeByEsc(evt) {
   if (evt.key === "Escape") {
     const popupElement = document.querySelector(".popup_opened");
     popupDisable(popupElement);
   }
 }
 // Открытие попапа
-function popupActivate(popupElement) {
+export function popupActivate(popupElement) {
   popupElement.classList.add("popup_opened");
 }
 
 // Закрытие попапа
-function popupDisable(popupElement) {
+export function popupDisable(popupElement) {
   popupElement.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEsc);
 }
@@ -134,56 +130,6 @@ function popupHandler(popupElement) {
   document.addEventListener("keydown", closeByEsc);
   popupActivate(popupElement);
 }
-
-// Увеличение изображения
-function zoomImage(evt) {
-  bigImagePlace.src = evt.target.src;
-  bigImagePlace.alt = evt.target.alt;
-  bigImageCapture.textContent = evt.target.alt;
-  document.addEventListener("keydown", closeByEsc);
-  popupActivate(popupImage);
-}
-
-// Обработчик удаления карточки
-function handleDeleteCard(evt) {
-  const deleteCard = evt.target.closest(".card");
-  // Снятие слушателей
-  deleteCard
-    .querySelector(".card__like-button")
-    .removeEventListener("click", likeCard);
-  deleteCard
-    .querySelector(".card__remove-button")
-    .removeEventListener("click", handleDeleteCard);
-  deleteCard
-    .querySelector(".card__picture")
-    .removeEventListener("click", zoomImage);
-  deleteCard.remove();
-}
-
-// // Создание шаблона карточки
-// function makeCard(item) {
-//   const cardItem = cardTemplate.cloneNode(true);
-//   cardItem.querySelector(".card__name").textContent = item.name;
-//   const imageItem = cardItem.querySelector(".card__picture");
-//   imageItem.src = item.link;
-//   imageItem.alt = item.name;
-//   const removeButton = cardItem.querySelector(".card__remove-button");
-//   removeButton.addEventListener("click", handleDeleteCard);
-//   const likeButton = cardItem.querySelector(".card__like-button");
-//   likeButton.addEventListener("click", likeCard);
-//   imageItem.addEventListener("click", zoomImage);
-//   return cardItem;
-// }
-
-// // Превращение массива в массив шаблонов
-// function renderCards(cardsArr) {
-//   return cardsArr.map((cardItem) => makeCard(cardItem));
-// }
-
-// // Добавление элементов в разметку
-// function addCards(cardsArr) {
-//   cardsContainer.prepend(...cardsArr);
-// }
 
 // Обработчик добавления новой карточки
 function addCardSubmitHandler(evt) {
@@ -234,6 +180,4 @@ profileForm.addEventListener("submit", renameFormSubmitHandler);
 // Слушатель для открытия попапа профиля
 editButton.addEventListener("click", () => popupHandler(profilePopup));
 
-// Добавление начальных карточек
-// addCards(renderCards(initialCards));
 setPopupEventListeners();
