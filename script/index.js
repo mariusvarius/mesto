@@ -44,6 +44,31 @@ const initialCards = [{
   },
 ];
 
+import {
+  Card
+} from '../script/card.js';
+
+initialCards.forEach((item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item.name, item.link, '.card-template');
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  cardsContainer.append(cardElement);
+});
+
+import {
+  config,
+  FormValidator
+} from '../script/formValidator.js';
+
+const newValidationPlace = new FormValidator(config, placeForm);
+const startValidationPlace = newValidationPlace.enableValidation();
+
+const newValidationProfile = new FormValidator(config, profileForm);
+const startValidationProfile = newValidationProfile.enableValidation();
+
 // Лайк карточки
 function likeCard(evt) {
   evt.target.classList.toggle("card__like-button_mode_active");
@@ -135,39 +160,39 @@ function handleDeleteCard(evt) {
   deleteCard.remove();
 }
 
-// Создание шаблона карточки
-function makeCard(item) {
-  const cardItem = cardTemplate.cloneNode(true);
-  cardItem.querySelector(".card__name").textContent = item.name;
-  const imageItem = cardItem.querySelector(".card__picture");
-  imageItem.src = item.link;
-  imageItem.alt = item.name;
-  const removeButton = cardItem.querySelector(".card__remove-button");
-  removeButton.addEventListener("click", handleDeleteCard);
-  const likeButton = cardItem.querySelector(".card__like-button");
-  likeButton.addEventListener("click", likeCard);
-  imageItem.addEventListener("click", zoomImage);
-  return cardItem;
-}
+// // Создание шаблона карточки
+// function makeCard(item) {
+//   const cardItem = cardTemplate.cloneNode(true);
+//   cardItem.querySelector(".card__name").textContent = item.name;
+//   const imageItem = cardItem.querySelector(".card__picture");
+//   imageItem.src = item.link;
+//   imageItem.alt = item.name;
+//   const removeButton = cardItem.querySelector(".card__remove-button");
+//   removeButton.addEventListener("click", handleDeleteCard);
+//   const likeButton = cardItem.querySelector(".card__like-button");
+//   likeButton.addEventListener("click", likeCard);
+//   imageItem.addEventListener("click", zoomImage);
+//   return cardItem;
+// }
 
-// Превращение массива в массив шаблонов
-function renderCards(cardsArr) {
-  return cardsArr.map((cardItem) => makeCard(cardItem));
-}
+// // Превращение массива в массив шаблонов
+// function renderCards(cardsArr) {
+//   return cardsArr.map((cardItem) => makeCard(cardItem));
+// }
 
-// Добавление элементов в разметку
-function addCards(cardsArr) {
-  cardsContainer.prepend(...cardsArr);
-}
+// // Добавление элементов в разметку
+// function addCards(cardsArr) {
+//   cardsContainer.prepend(...cardsArr);
+// }
 
 // Обработчик добавления новой карточки
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  const newCard = makeCard({
-    name: placeNameInput.value,
-    link: placeLinkInput.value,
-  });
-  addCards([newCard]);
+  const card = new Card(placeNameInput.value, placeLinkInput.value, '.card-template');
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+  // Добавляем в DOM
+  cardsContainer.prepend(cardElement);
   popupDisable(placePopup);
 }
 
@@ -210,5 +235,5 @@ profileForm.addEventListener("submit", renameFormSubmitHandler);
 editButton.addEventListener("click", () => popupHandler(profilePopup));
 
 // Добавление начальных карточек
-addCards(renderCards(initialCards));
+// addCards(renderCards(initialCards));
 setPopupEventListeners();
