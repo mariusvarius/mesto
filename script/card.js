@@ -1,9 +1,11 @@
+//Импорт функций
 import {
     closeByEsc,
     popupActivate,
     popupDisable
 } from '../script/index.js';
 
+//Класс карточки
 export class Card {
     constructor(name, link, cardSelector) {
         this._name = name;
@@ -11,6 +13,7 @@ export class Card {
         this._cardSelector = cardSelector;
     }
 
+    //Получение шаблона из разметки
     _getTemplate() {
         const cardElement = document
             .querySelector(this._cardSelector)
@@ -19,7 +22,7 @@ export class Card {
             .cloneNode(true);
         return cardElement;
     }
-
+    //Установка слушателей
     _setEventListeners() {
         this._element.querySelector(".card__remove-button").addEventListener("click", () => {
             this._handleDeleteCard()
@@ -32,7 +35,7 @@ export class Card {
         });
     }
 
-
+    //Создание карточки
     generateCard() {
         this._element = this._getTemplate();
         this._setEventListeners();
@@ -42,7 +45,7 @@ export class Card {
         cardPic.alt = this._name;
         return this._element;
     }
-
+    //Обработчик удаления карточки
     _handleDeleteCard() {
         this._element
             .querySelector(".card__like-button")
@@ -62,11 +65,11 @@ export class Card {
         this._element.remove();
         this._element = null;
     }
-
+    //Лайк карточки
     _likeCard() {
         this._element.querySelector(".card__like-button").classList.toggle("card__like-button_mode_active");
     }
-
+    //Увеличение изображения
     _zoomImage() {
         const popupPicElement = document.querySelector(".popup_type_picture");
         const popupPicture = document.querySelector(".popup__big-picture");

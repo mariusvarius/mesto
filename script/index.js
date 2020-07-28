@@ -1,6 +1,4 @@
 const editButton = document.querySelector(".profile__edit-button");
-const closeButtonProfile = document.querySelector("#close-button-profile");
-const closeButtonPlace = document.querySelector("#close-button-place");
 const closeButtonPicture = document.querySelector("#close-button-picture");
 const addButton = document.querySelector(".profile__add-button");
 const profilePopup = document.querySelector(".popup_type_profile");
@@ -9,13 +7,10 @@ const title = document.querySelector(".profile__title");
 const subtitle = document.querySelector(".profile__subtitle");
 const cardsContainer = document.querySelector(".cards");
 const popupImage = document.querySelector(".popup_type_picture");
-const cardTemplate = document.querySelector("#card-template").content;
 const profileNameInput = document.querySelector(".popup__input_data_name");
 const profileJobInput = document.querySelector(".popup__input_data_job");
 const placeNameInput = document.querySelector(".popup__input_data_place");
 const placeLinkInput = document.querySelector(".popup__input_data_link");
-const bigImagePlace = document.querySelector(".popup__big-picture");
-const bigImageCapture = document.querySelector(".popup__capture");
 const placeForm = document.querySelector("#popup-place");
 const profileForm = document.querySelector("#popup-profile");
 const initialCards = [{
@@ -44,10 +39,12 @@ const initialCards = [{
   },
 ];
 
+//Импорт класса карточки
 import {
   Card
 } from '../script/card.js';
 
+//Запуск "отрисовки" карточек
 initialCards.forEach((item) => {
   // Создадим экземпляр карточки
   const card = new Card(item.name, item.link, '.card-template');
@@ -58,11 +55,13 @@ initialCards.forEach((item) => {
   cardsContainer.append(cardElement);
 });
 
+//Импорт класса валидации
 import {
   config,
   FormValidator
 } from '../script/formValidator.js';
 
+//Запуск валидации для каждого попапа
 const newValidationPlace = new FormValidator(config, placeForm);
 const startValidationPlace = newValidationPlace.enableValidation();
 
@@ -80,26 +79,15 @@ export function closeByEsc(evt) {
 // Открытие попапа
 export function popupActivate(popupElement) {
   popupElement.classList.add("popup_opened");
+  const refreshForm = newValidationPlace.resetForm();
+  const refreshProfileForm = newValidationProfile.resetForm();
+
 }
 
 // Закрытие попапа
 export function popupDisable(popupElement) {
   popupElement.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEsc);
-}
-
-//Изначальная инактивация кнопки сабмита
-function inactivateSubmitButton(popupElement) {
-  const submitButton = popupElement.querySelector('.popup__save-button');
-  submitButton.setAttribute('disabled', false);
-  submitButton.classList.add('popup__save-button_disabled');
-}
-
-//Изначальная активация кнопки сабмита
-function activateSubmitButton(popupElement) {
-  const submitButton = popupElement.querySelector('.popup__save-button');
-  submitButton.removeAttribute('disabled');
-  submitButton.classList.remove('popup__save-button_disabled');
 }
 
 //Обработчик попапа
@@ -112,17 +100,15 @@ function popupHandler(popupElement) {
     // Обновление информации из профиля
     profileNameInput.value = title.textContent;
     profileJobInput.value = subtitle.textContent;
-    activateSubmitButton(popupElement);
   }
   // Определение попапа для карточки, проверка на скрытое состояние
   if (
     popupElement.classList.contains("popup_type_place") &&
     !popupElement.classList.contains("popup_opened")
   ) {
-    // Удаление ранее введенных данных
+    // // Удаление ранее введенных данных
     placeNameInput.value = "";
     placeLinkInput.value = "";
-    inactivateSubmitButton(popupElement);
   }
   popupElement
     .querySelector(".popup__close-button")
@@ -180,4 +166,5 @@ profileForm.addEventListener("submit", renameFormSubmitHandler);
 // Слушатель для открытия попапа профиля
 editButton.addEventListener("click", () => popupHandler(profilePopup));
 
+//Запуск функции установки обработчиков
 setPopupEventListeners();

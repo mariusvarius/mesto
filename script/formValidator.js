@@ -1,3 +1,4 @@
+//Изначальный объект растроек
 export const config = {
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__save-button',
@@ -6,6 +7,7 @@ export const config = {
     errorClass: 'popup__input-error_mode_active'
 };
 
+//Класс валидации
 export class FormValidator {
     constructor({
         inputSelector,
@@ -22,53 +24,48 @@ export class FormValidator {
         this.currentForm = currentForm;
     }
 
-
+    //Появление ошибок
     _showInputError(inputElement, errorMessage) {
         const errorElement = this.currentForm.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._errorClass);
-        console.log(errorElement, 'здесь сообщение об ошибке');
     }
-
+    //Сокрытие ошибок
     _hideInputError(inputElement) {
         const errorElement = this.currentForm.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.remove(this._inputErrorClass);
         errorElement.classList.remove(this._errorClass);
         errorElement.textContent = '';
     }
-
+    //Проверка инпута
     _isValid(inputElement) {
-        console.log(this);
         if (!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
         } else {
             this._hideInputError(inputElement);
         }
     }
-
+    //Установка слушателей
     _setEventListeners(currentForm) {
         const inputList = Array.from(this.currentForm.querySelectorAll(this._inputSelector));
-        console.log(inputList);
         inputList.forEach((inputElement) => {
-            console.log(inputElement);
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
                 this._toggleButtonState();
             });
         });
     }
-
+    //Запуск валидации
     enableValidation() {
         this.currentForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
-        console.log(this.currentForm);
         this._setEventListeners();
 
     }
 
-
+    //Выявление хотя бы одного невалидного инпута
     _hasInvalidInput() {
         const inputList = Array.from(this.currentForm.querySelectorAll(this._inputSelector));
         return inputList.some((inputElement) => {
@@ -76,6 +73,7 @@ export class FormValidator {
         });
     }
 
+    //Переключение кнопки
     _toggleButtonState() {
         const buttonElement = this.currentForm.querySelector(this._submitButtonSelector);
         const inputList = Array.from(this.currentForm.querySelectorAll(this._inputSelector));
@@ -88,5 +86,14 @@ export class FormValidator {
             buttonElement.classList.remove(this._inactiveButtonClass);
             buttonElement.removeAttribute('disabled');
         }
+    }
+
+    //Сброс ошибок валидации перед запуском
+    resetForm() {
+        const inputList = Array.from(this.currentForm.querySelectorAll(this._inputSelector));
+        inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement);
+        });
+        this._toggleButtonState();
     }
 }
