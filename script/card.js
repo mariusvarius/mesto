@@ -1,8 +1,8 @@
 //Импорт функций
 import {
     closeByEsc,
-    popupActivate,
-    popupDisable
+    activatePopup,
+    disablePopup
 } from '../script/index.js';
 
 //Класс карточки
@@ -76,7 +76,7 @@ export class Card {
         popupPicture.src = this._link;
         popupPicture.alt = this._name;
         popupPicElement.querySelector(".popup__capture").textContent = this._name;
-        popupActivate(popupPicElement);
+        activatePopup(popupPicElement);
         document.addEventListener("keydown", closeByEsc);
     };
 }
