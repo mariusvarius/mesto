@@ -103,9 +103,6 @@ function handlePlacePopup() {
 
 //Уставнока слушаталей на попапы
 function setPopupEventListenersForOpening(popupElement) {
-  popupElement
-    .querySelector(".popup__close-button")
-    .addEventListener("click", () => disablePopup(popupElement));
   document.addEventListener("keydown", closeByEsc);
 }
 
@@ -149,11 +146,15 @@ function clickByOverlay(evt) {
   }
 }
 
-//Функция установки обработчика клика по оверлею для попапов
+//Функция установки обработчика клика по оверлею и закрытия по клику на "крестик" для попапов
 function setPopupEventListeners() {
   const popups = Array.from(document.querySelectorAll(".popup"));
   popups.forEach((popup) => {
     popup.addEventListener("click", clickByOverlay);
+    const closeButton =
+      popup
+      .querySelector(".popup__close-button");
+    closeButton.addEventListener("click", () => disablePopup(popup));
   });
 }
 
