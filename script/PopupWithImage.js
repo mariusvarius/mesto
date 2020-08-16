@@ -1,10 +1,6 @@
 import {
     Popup
-<<<<<<< HEAD
-} from './Popup.js';
-=======
 } from '../script/Popup.js';
->>>>>>> master
 
 import {
     popupImage,

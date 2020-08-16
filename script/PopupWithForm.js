@@ -1,19 +1,11 @@
 import {
     Popup
-<<<<<<< HEAD
-} from './Popup.js';
-=======
 } from '../script/Popup.js';
->>>>>>> master
 
 import {
     popupImage,
     imageFromPopup
-<<<<<<< HEAD
-} from './constants.js';
-=======
 } from '../script/constants.js';
->>>>>>> master
 
 export class PopupWithForm extends Popup {
     constructor({
