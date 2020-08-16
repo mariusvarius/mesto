@@ -31,6 +31,7 @@ export class FormValidator {
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._errorClass);
     }
+
     //Сокрытие ошибок
     _hideInputError(inputElement) {
         const errorElement = this.currentForm.querySelector(`#${inputElement.id}-error`);
@@ -38,6 +39,7 @@ export class FormValidator {
         errorElement.classList.remove(this._errorClass);
         errorElement.textContent = '';
     }
+
     //Проверка инпута
     _isValid(inputElement) {
         if (!inputElement.validity.valid) {
@@ -46,6 +48,7 @@ export class FormValidator {
             this._hideInputError(inputElement);
         }
     }
+
     //Установка слушателей
     _setEventListeners(currentForm) {
         const inputList = Array.from(this.currentForm.querySelectorAll(this._inputSelector));
@@ -56,6 +59,7 @@ export class FormValidator {
             });
         });
     }
+
     //Запуск валидации
     enableValidation() {
         this.currentForm.addEventListener('submit', (evt) => {
