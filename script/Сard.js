@@ -1,15 +1,23 @@
 //Импорт функций
+// import {
+//     closeByEsc,
+//     activatePopup,
+//     disablePopup
+// } from './index.js';
+
 import {
-    closeByEsc,
-    activatePopup,
-    disablePopup
-} from '../script/index.js';
+    PopupWithImage
+} from '../script/PopupWithImage.js';
 
 //Класс карточки
 export class Card {
-    constructor(name, link, cardSelector) {
-        this._name = name;
-        this._link = link;
+    constructor({
+        data,
+        handleCardClick
+    }, cardSelector) {
+        this._name = data.name;
+        this._link = data.link;
+        this._handleCardClick = handleCardClick;
         this._cardSelector = cardSelector;
     }
 
@@ -22,6 +30,19 @@ export class Card {
             .cloneNode(true);
         return cardElement;
     }
+
+    //Создание карточки
+    generateCard() {
+        this._element = this._getTemplate();
+        console.log(this._element);
+        this._setEventListeners();
+        this._element.querySelector(".card__name").textContent = this._name;
+        const cardPic = this._element.querySelector(".card__picture");
+        cardPic.src = this._link;
+        cardPic.alt = this._name;
+        return this._element;
+    }
+
     //Установка слушателей
     _setEventListeners() {
         this._element.querySelector(".card__remove-button").addEventListener("click", () => {
@@ -35,16 +56,6 @@ export class Card {
         });
     }
 
-    //Создание карточки
-    generateCard() {
-        this._element = this._getTemplate();
-        this._setEventListeners();
-        this._element.querySelector(".card__name").textContent = this._name;
-        const cardPic = this._element.querySelector(".card__picture");
-        cardPic.src = this._link;
-        cardPic.alt = this._name;
-        return this._element;
-    }
     //Обработчик удаления карточки
     _handleDeleteCard() {
         this._element
@@ -69,14 +80,5 @@ export class Card {
     _likeCard() {
         this._element.querySelector(".card__like-button").classList.toggle("card__like-button_mode_active");
     }
-    //Увеличение изображения
-    _zoomImage() {
-        const popupPicElement = document.querySelector(".popup_type_picture");
-        const popupPicture = document.querySelector(".popup__big-picture");
-        popupPicture.src = this._link;
-        popupPicture.alt = this._name;
-        popupPicElement.querySelector(".popup__capture").textContent = this._name;
-        activatePopup(popupPicElement);
-        document.addEventListener("keydown", closeByEsc);
-    };
+
 }
