@@ -1,8 +1,3 @@
-import {
-    profileNameInput,
-    profileJobInput
-} from '../script/constants.js';
-
 export class UserInfo {
     constructor({
         profileNameSelector,

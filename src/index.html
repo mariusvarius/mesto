@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./index/index.css" />
   <title>Проект Место</title>
 </head>
 
@@ -32,10 +31,10 @@
     <form class="popup__container form" id="popup-profile" novalidate>
       <h3 class="popup__title">Редактировать профиль</h3>
       <fieldset class="popup__fieldset">
-        <input class="popup__input popup__input_data_name" type="text" required minlength="2" maxlength="40"
+        <input class="popup__input popup__input_data_name" name="name" type="text" required minlength="2" maxlength="40"
           id="popup__input_data_name" required />
         <span class="popup__input-error" id="popup__input_data_name-error"></span>
-        <input class="popup__input popup__input_data_job" type="text" required minlength="2" maxlength="200"
+        <input class="popup__input popup__input_data_job" name="job" type="text" required minlength="2" maxlength="200"
           id="popup__input_data_job" required />
         <span class="popup__input-error" id="popup__input_data_job-error"></span>
       </fieldset>
@@ -49,10 +48,10 @@
     <form class="popup__container form" id="popup-place" novalidate>
       <h3 class="popup__title">Новое место</h3>
       <fieldset class="popup__fieldset">
-        <input class="popup__input popup__input_data_place" type="text" placeholder="Название" required minlength="1"
-          maxlength="30" id="popup__input_data_place" required />
+        <input class="popup__input popup__input_data_place" name="name" type="text" placeholder="Название" required
+          minlength="1" maxlength="30" id="popup__input_data_place" required />
         <span class="popup__input-error" id="popup__input_data_place-error"></span>
-        <input class="popup__input popup__input_data_link" type="url" placeholder="Ссылка на картинку"
+        <input class="popup__input popup__input_data_link" name="link" type="url" placeholder="Ссылка на картинку"
           id="popup__input_data_link" minlength="1" required />
         <span class="popup__input-error" id="popup__input_data_link-error"></span>
       </fieldset>
@@ -65,7 +64,7 @@
   </div>
   <template class="card-template" id="card-template">
     <div class="card">
-      <img src="" alt="" class="card__picture" />
+      <img class="card__picture" />
       <button class="card__remove-button button" id="remove-button" type="button"></button>
       <div class="card__content">
         <h3 class="card__name"></h3>
@@ -76,15 +75,10 @@
   <div class="popup popup_type_picture">
     <div class="popup__image-container">
       <button class="popup__close-button button" id="close-button-picture" type="button"></button>
-      <img src="" alt="" class="popup__big-picture" />
+      <img class="popup__big-picture" />
       <p class="popup__capture"></p>
     </div>
   </div>
-  <script type="module" src="./script/index.js"></script>
-  <script type="module" src="./script/card.js"></script>
-  <script type="module" src="./script/formValidator.js"></script>
-
-
 </body>
 
 </html>
