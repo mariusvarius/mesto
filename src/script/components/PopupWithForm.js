@@ -1,6 +1,6 @@
 import {
     Popup
-} from '../components/Popup.js';
+} from './Popup.js';
 
 
 export class PopupWithForm extends Popup {

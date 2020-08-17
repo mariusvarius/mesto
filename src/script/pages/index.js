@@ -1,3 +1,5 @@
+//Импорт CSS
+import "../../index/index.css";
 //Импорт констант
 import {
   editButton,
@@ -10,46 +12,39 @@ import {
   placeLinkInput,
   placeForm,
   profileForm,
-  initialCards
-} from '../utils/constants.js';
+  initialCards,
+} from "../utils/constants.js";
 
 //Импорт классов
-import {
-  Card
-} from '../components/Сard.js';
-import {
-  PopupWithForm
-} from '../components/PopupWithForm.js';
-import {
-  PopupWithImage
-} from '../components/PopupWithImage.js';
-import {
-  UserInfo
-} from '../components/UserInfo.js';
-import {
-  Section
-} from '../components/Section.js';
+import { Card } from "../components/Сard.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { Section } from "../components/Section.js";
 
 //Импорт класса валидации
-import {
-  config,
-  FormValidator
-} from '../components/FormValidator.js';
+import { config, FormValidator } from "../components/FormValidator.js";
 
 //Новый экземпляр класса Section (изначальная загрузка карточек)
-const cardList = new Section({
-  items: initialCards,
-  renderer: (data) => {
-    const card = new Card({
-      data,
-      handleCardClick: () => {
-        newPopupWithImage.popupOpen(data);
-      }
-    }, '.card-template');
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-  }
-}, ".cards");
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (data) => {
+      const card = new Card(
+        {
+          data,
+          handleCardClick: () => {
+            newPopupWithImage.popupOpen(data);
+          },
+        },
+        ".card-template"
+      );
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    },
+  },
+  ".cards"
+);
 cardList.renderItems();
 
 //Запуск валидации для каждого попапа
@@ -61,17 +56,17 @@ newValidationProfile.enableValidation();
 
 //Новый экземпляр класса с информацией о пользователе
 const newUserInfo = new UserInfo({
-  profileNameSelector: '.profile__title',
-  profileJobSelector: '.profile__subtitle'
+  profileNameSelector: ".profile__title",
+  profileJobSelector: ".profile__subtitle",
 });
 
 //Новый экземпляр класса попапа профиля
 const newPopupWithFormProfile = new PopupWithForm({
-  popupSelector: '.popup_type_profile',
+  popupSelector: ".popup_type_profile",
   handleFormSubmit: (data) => {
     newUserInfo.setUserInfo(data);
     newPopupWithFormProfile.popupClose();
-  }
+  },
 });
 newPopupWithFormProfile.setEventListeners();
 
@@ -85,18 +80,21 @@ function handleOpenProfilePopup() {
 
 //Экземпляр класса попапа места
 const newPopupWithFormPlace = new PopupWithForm({
-  popupSelector: '.popup_type_place',
+  popupSelector: ".popup_type_place",
   handleFormSubmit: (data) => {
-    const card = new Card({
-      data,
-      handleCardClick: () => {
-        newPopupWithImage.popupOpen(data, ".popup_type_picture");
-      }
-    }, '.card-template');
+    const card = new Card(
+      {
+        data,
+        handleCardClick: () => {
+          newPopupWithImage.popupOpen(data, ".popup_type_picture");
+        },
+      },
+      ".card-template"
+    );
     const cardElement = card.generateCard();
     cardList.addNewItem(cardElement);
     newPopupWithFormPlace.popupClose();
-  }
+  },
 });
 newPopupWithFormPlace.setEventListeners();
 
@@ -109,7 +107,7 @@ function handleOpenPlacePopup() {
 }
 
 //Новый экземпляр попапа с картинкой
-const newPopupWithImage = new PopupWithImage('.popup_type_picture');
+const newPopupWithImage = new PopupWithImage(".popup_type_picture");
 newPopupWithImage.setEventListeners();
 
 // // Слушатель для открытия попапа места (карточки)

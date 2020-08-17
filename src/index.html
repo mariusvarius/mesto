@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./index/index.css" />
   <title>Проект Место</title>
 </head>
 
@@ -65,7 +64,7 @@
   </div>
   <template class="card-template" id="card-template">
     <div class="card">
-      <img src="" alt="" class="card__picture" />
+      <img class="card__picture" />
       <button class="card__remove-button button" id="remove-button" type="button"></button>
       <div class="card__content">
         <h3 class="card__name"></h3>
@@ -76,19 +75,10 @@
   <div class="popup popup_type_picture">
     <div class="popup__image-container">
       <button class="popup__close-button button" id="close-button-picture" type="button"></button>
-      <img src="" alt="" class="popup__big-picture" />
+      <img class="popup__big-picture" />
       <p class="popup__capture"></p>
     </div>
   </div>
-  <script type="module" src="./script/pages/index.js"></script>
-  <script type="module" src="./script/components/Сard.js"></script>
-  <script type="module" src="./script/components/FormValidator.js"></script>
-  <script type="module" src="./script/components/Popup.js"></script>
-  <script type="module" src="./script/components/PopupWithForm.js"></script>
-  <script type="module" src="./script/components/PopupWithImage.js"></script>
-  <script type="module" src="./script/components/Section.js"></script>
-  <script type="module" src="./script/components/UserInfo.js"></script>
-
 </body>
 
 </html>
