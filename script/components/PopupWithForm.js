@@ -1,11 +1,7 @@
 import {
     Popup
-} from '../script/Popup.js';
+} from '../components/Popup.js';
 
-import {
-    popupImage,
-    imageFromPopup
-} from '../script/constants.js';
 
 export class PopupWithForm extends Popup {
     constructor({
@@ -31,7 +27,10 @@ export class PopupWithForm extends Popup {
             this._handleFormSubmit(data);
             super.popupClose();
             this._popupForm.reset();
-        })
+        });
+        this._popup.addEventListener('click', (evt) => {
+            this._handleOverlayClose(evt)
+        });
         const closeButton =
             this._popup
             .querySelector(".popup__close-button");

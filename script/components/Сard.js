@@ -1,14 +1,3 @@
-//Импорт функций
-// import {
-//     closeByEsc,
-//     activatePopup,
-//     disablePopup
-// } from './index.js';
-
-import {
-    PopupWithImage
-} from '../script/PopupWithImage.js';
-
 //Класс карточки
 export class Card {
     constructor({
@@ -51,8 +40,8 @@ export class Card {
         this._element.querySelector(".card__like-button").addEventListener("click", () => {
             this._likeCard()
         });
-        this._element.querySelector(".card__picture").addEventListener("click", () => {
-            this._zoomImage()
+        this._element.querySelector(".card__picture").addEventListener("click", (evt) => {
+            this._handleCardClick()
         });
     }
 
