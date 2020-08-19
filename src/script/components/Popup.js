@@ -27,6 +27,7 @@ export class Popup {
         this._popup.addEventListener("keydown", () => {
             this._handleEscClose()
         });
+        this._popup.querySelector('popup__big-picture')
         this._popup.addEventListener('click', (evt) => {
             this._handleOverlayClose(evt)
         });

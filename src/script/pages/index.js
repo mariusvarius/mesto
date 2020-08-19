@@ -13,25 +13,36 @@ import {
   placeForm,
   profileForm,
   initialCards,
+  config
 } from "../utils/constants.js";
 
 //Импорт классов
-import { Card } from "../components/Сard.js";
-import { PopupWithForm } from "../components/PopupWithForm.js";
-import { PopupWithImage } from "../components/PopupWithImage.js";
-import { UserInfo } from "../components/UserInfo.js";
-import { Section } from "../components/Section.js";
+import {
+  Card
+} from "../components/Сard.js";
+import {
+  PopupWithForm
+} from "../components/PopupWithForm.js";
+import {
+  PopupWithImage
+} from "../components/PopupWithImage.js";
+import {
+  UserInfo
+} from "../components/UserInfo.js";
+import {
+  Section
+} from "../components/Section.js";
 
 //Импорт класса валидации
-import { config, FormValidator } from "../components/FormValidator.js";
+import {
+  FormValidator
+} from "../components/FormValidator.js";
 
 //Новый экземпляр класса Section (изначальная загрузка карточек)
-const cardList = new Section(
-  {
+const cardList = new Section({
     items: initialCards,
     renderer: (data) => {
-      const card = new Card(
-        {
+      const card = new Card({
           data,
           handleCardClick: () => {
             newPopupWithImage.popupOpen(data);
@@ -82,8 +93,7 @@ function handleOpenProfilePopup() {
 const newPopupWithFormPlace = new PopupWithForm({
   popupSelector: ".popup_type_place",
   handleFormSubmit: (data) => {
-    const card = new Card(
-      {
+    const card = new Card({
         data,
         handleCardClick: () => {
           newPopupWithImage.popupOpen(data, ".popup_type_picture");
