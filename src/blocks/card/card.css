@@ -3,9 +3,11 @@
 @import url(../card/__content/card__content.css);
 @import url(../card/__like-button/card__like-button.css);
 @import url(../card/__remove-button/card__remove-button.css);
+@import url(../card/__like-container/card__like-container.css);
+@import url(../card/__like-counter/card__like-counter.css);
 .card {
-    background-color: white;
-    border-radius: 10px;
-    width: 100%;
-    position: relative;
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
 }

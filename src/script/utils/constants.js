@@ -3,6 +3,7 @@ export const closeButtonPicture = document.querySelector("#close-button-picture"
 export const addButton = document.querySelector(".profile__add-button");
 export const profilePopup = document.querySelector(".popup_type_profile");
 export const placePopup = document.querySelector(".popup_type_place");
+export const avatarPopup = document.querySelector(".popup_type_avatar");
 export const title = document.querySelector(".profile__title");
 export const subtitle = document.querySelector(".profile__subtitle");
 export const cardsContainer = document.querySelector(".cards");
@@ -14,6 +15,7 @@ export const placeNameInput = document.querySelector(".popup__input_data_place")
 export const placeLinkInput = document.querySelector(".popup__input_data_link");
 export const placeForm = document.querySelector("#popup-place");
 export const profileForm = document.querySelector("#popup-profile");
+export const avatarForm = document.querySelector("#popup-avatar");
 export const initialCards = [{
         name: "Архыз",
         link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
