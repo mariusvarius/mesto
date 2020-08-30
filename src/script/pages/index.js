@@ -99,15 +99,14 @@ api.getAppInfo().then(res => {
             handleCardDislike: () => {
               api.dislikeCard(data._id).then(res => {
                 card.updateLikes(res.likes);
-
               })
             },
             handleCardDelete: () => {
               newPopupWithFormSubmit.popupOpen();
               newPopupWithFormSubmit.setSubmitAction(() => {
+                newPopupWithFormSubmit.activatePreload();
                 api.deleteItem(data._id).then(res => {
                     card._handleDeleteCard();
-
                   })
                   .catch((err) => {
                     console.log(err);
@@ -115,7 +114,6 @@ api.getAppInfo().then(res => {
                 newPopupWithFormSubmit.popupClose();
               })
               console.log('удаление!')
-
             },
             userId: userInfoFromServer._id
           },
@@ -157,6 +155,7 @@ api.getAppInfo().then(res => {
               handleCardDelete: () => {
                 newPopupWithFormSubmit.popupOpen();
                 newPopupWithFormSubmit.setSubmitAction(() => {
+                  newPopupWithFormSubmit.activatePreload();
                   api.deleteItem(res._id).then(res => {
                       card._handleDeleteCard();
 
@@ -183,26 +182,28 @@ api.getAppInfo().then(res => {
   const newPopupWithFormProfile = new PopupWithForm({
     popupSelector: ".popup_type_profile",
     handleFormSubmit: (data) => {
-
+      newPopupWithFormProfile.activatePreload();
       api.editProfile(data).then(res => {
         newUserInfo.setUserInfo(data);
+        newPopupWithFormProfile.disablePreload();
       })
-
-      // newUserInfo.setUserInfo(data);
       newPopupWithFormProfile.popupClose();
     },
+
   });
 
   //Новый экземпляр класса попапа с аватаркой
   const newPopupWithFormAvatar = new PopupWithForm({
     popupSelector: ".popup_type_avatar",
     handleFormSubmit: (data) => {
+      newPopupWithFormAvatar.activatePreload();
       console.log(data);
       api.patchAvatar(data).then(res => {
         console.log(data.avatar);
         newUserInfo.setUserAvatar(data.avatar)
       })
-    }
+      newPopupWithFormAvatar.disablePreload();
+    },
   })
 
   //Новый экземпляр попапа с изображением

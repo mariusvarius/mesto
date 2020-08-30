@@ -2,6 +2,7 @@ export class Popup {
 
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
+        this._submitButton = this._popup.querySelector(".popup__save-button");
     }
     popupOpen() {
         this._popup.classList.add("popup_opened");
@@ -35,7 +36,13 @@ export class Popup {
             this._popup
             .querySelector(".popup__close-button");
         closeButton.addEventListener("click", () => this.popupClose());
-    };
+    }
+    activatePreload() {
+        this._submitButton.textContent = "Сохранение..."
+    }
 
+    disablePreload() {
+        this._submitButton.textContent = "Создать"
+    }
 
 }

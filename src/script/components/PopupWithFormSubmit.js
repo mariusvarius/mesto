@@ -3,6 +3,7 @@ import {
 } from './Popup.js';
 
 export class PopupWithFormSubmit extends Popup {
+
     constructor(popupSelector) {
         super(popupSelector);
         this._popupForm = this._popup.querySelector('.form');
@@ -17,6 +18,8 @@ export class PopupWithFormSubmit extends Popup {
     setEventListeners() {
         this._popupForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
+            const submitButton = this._popup.querySelector('.popup__save-button');
+            // submitButton.textContent = 'Сохранение...';
             this._handleSubmitCallback();
             super.popupClose();
 
@@ -31,5 +34,13 @@ export class PopupWithFormSubmit extends Popup {
             super.popupClose();
 
         })
+    }
+
+    activatePreload() {
+        this._submitButton.textContent = "Удаление..."
+    }
+
+    disablePreload() {
+        this._submitButton.textContent = "Да"
     }
 }
