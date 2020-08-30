@@ -98,7 +98,7 @@ api.getAppInfo().then(res => {
                 card._handleDeleteCard();
               })
             },
-            userId: data._id
+            userId: userInfoFromServer._id
           },
           ".card-template"
         );

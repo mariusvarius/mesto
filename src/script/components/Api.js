@@ -62,6 +62,7 @@ export class Api {
 
     likeCard(id) {
         console.log(id);
+        console.log("сработал лайк в апи");
         return fetch(`${this.baseUrl}/likes/${id}`, {
                 method: 'PUT',
                 headers: this.headers
@@ -76,6 +77,7 @@ export class Api {
 
     dislikeCard(id) {
         console.log(id);
+        console.log("сработал дизлайк в апи");
         return fetch(`${this.baseUrl}/likes/${id}`, {
                 method: 'DELETE',
                 headers: this.headers

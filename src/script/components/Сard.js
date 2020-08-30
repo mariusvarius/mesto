@@ -36,22 +36,23 @@ export class Card {
         this.renderLikes();
     }
 
+    _isLiked() {
+        console.log(this._likes);
+        console.log(this._userId);
+        return this._likes.some((like) => {
+            return like._id === this._userId;
+        });
+    }
+
     renderLikes() {
         this._likesCounter.textContent = this._likes.length;
         if (this._isLiked()) {
             this._likeButton.classList.add("card__like-button_mode_active");
-            console.log("здесь должен быть лайк")
+            console.log("поставить лайк в разметке")
         } else {
             this._likeButton.classList.remove("card__like-button_mode_active");
-            console.log("ничего не вышло")
+            console.log("удалить лайк из разметки")
         };
-    }
-
-    _isLiked() {
-        console.log(this._likes);
-        return this._likes.some((like) => {
-            return like._id === this._userId;
-        });
     }
 
     //Создание карточки
@@ -77,13 +78,12 @@ export class Card {
             this._handleCardDelete()
         });
         this._element.querySelector(".card__like-button").addEventListener("click", () => {
-            this._likeButton.classList.toggle("card__like-button_mode_active");
-            if (this._likeButton.classList.contains("card__like-button_mode_active")) {
+            if (!this._likeButton.classList.contains("card__like-button_mode_active")) {
                 this._handleCardLike();
-                console.log("лайкни меня");
+                console.log("сработал обработчик лайка");
             } else {
                 this._handleCardDislike();
-                console.log("удали меня!");
+                console.log("сработал обработчик дизлайка");
             };
 
         });
