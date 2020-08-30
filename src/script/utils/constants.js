@@ -1,4 +1,5 @@
 export const editButton = document.querySelector(".profile__edit-button");
+export const editButtonAvatar = document.querySelector(".profile__avatar");
 export const closeButtonPicture = document.querySelector("#close-button-picture");
 export const addButton = document.querySelector(".profile__add-button");
 export const profilePopup = document.querySelector(".popup_type_profile");
@@ -10,7 +11,7 @@ export const cardsContainer = document.querySelector(".cards");
 export const popupImage = document.querySelector(".popup_type_picture");
 export const imageFromPopup = document.querySelector(".popup__big-picture");
 export const profileNameInput = document.querySelector(".popup__input_data_name");
-export const profileJobInput = document.querySelector(".popup__input_data_job");
+export const profileJobInput = document.querySelector(".popup__input_data_about");
 export const placeNameInput = document.querySelector(".popup__input_data_place");
 export const placeLinkInput = document.querySelector(".popup__input_data_link");
 export const placeForm = document.querySelector("#popup-place");

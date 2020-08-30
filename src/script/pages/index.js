@@ -13,7 +13,7 @@ import {
   placeForm,
   profileForm,
   avatarForm,
-  initialCards,
+  editButtonAvatar,
   config
 } from "../utils/constants.js";
 
@@ -36,6 +36,10 @@ import {
 import {
   Api
 } from "../components/Api.js";
+
+import {
+  PopupWithFormSubmit
+} from "../components/PopupWithFormSubmit.js";
 
 //Импорт класса валидации
 import {
@@ -64,15 +68,21 @@ const api = new Api({
 api.getAppInfo().then(res => {
   const [cardsFromServer, userInfoFromServer] = res
   console.log(res);
+
+  //Новый экземпляр класса UserInfo
   const newUserInfo = new UserInfo({
     profileNameSelector: ".profile__title",
     profileJobSelector: ".profile__subtitle",
+    profileAvatarSelector: ".profile__avatar"
+
   });
   newUserInfo.setUserInfo({
     name: userInfoFromServer.name,
-    job: userInfoFromServer.about
+    about: userInfoFromServer.about,
+    avatar: userInfoFromServer.avatar
   });
 
+  //Новый экземпляр класса Section с логикой загрузки карточек с сервера
   const cardList = new Section({
       items: cardsFromServer,
       renderer: (data) => {
@@ -93,10 +103,19 @@ api.getAppInfo().then(res => {
               })
             },
             handleCardDelete: () => {
-              console.log('удаление!')
-              api.deleteItem(data._id).then(res => {
-                card._handleDeleteCard();
+              newPopupWithFormSubmit.popupOpen();
+              newPopupWithFormSubmit.setSubmitAction(() => {
+                api.deleteItem(data._id).then(res => {
+                    card._handleDeleteCard();
+
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+                newPopupWithFormSubmit.popupClose();
               })
+              console.log('удаление!')
+
             },
             userId: userInfoFromServer._id
           },
@@ -110,6 +129,8 @@ api.getAppInfo().then(res => {
   );
   cardList.renderItems();
 
+
+  //Новый экземпляр создания попапа места с логикой добавления новой карточки
   const newPopupWithFormPlace = new PopupWithForm({
     popupSelector: ".popup_type_place",
     handleFormSubmit: (item) => {
@@ -124,18 +145,30 @@ api.getAppInfo().then(res => {
               handleCardLike: () => {
                 api.likeCard(res._id).then(res => {
                   card.updateLikes(res.likes);
+                  console.log('like!');
                 })
               },
-              handleCardDisLike: () => {
-                //
+              handleCardDislike: () => {
+                api.dislikeCard(res._id).then(res => {
+                  card.updateLikes(res.likes);
+                });
               },
 
               handleCardDelete: () => {
-                console.log('удаление')
-                api.deleteItem(res._id).then(res => {
-                  card._handleDeleteCard()
+                newPopupWithFormSubmit.popupOpen();
+                newPopupWithFormSubmit.setSubmitAction(() => {
+                  api.deleteItem(res._id).then(res => {
+                      card._handleDeleteCard();
+
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    })
+                  newPopupWithFormSubmit.popupClose();
                 })
-              }
+                console.log('удаление!')
+              },
+              userId: userInfoFromServer._id
             },
             ".card-template"
           );
@@ -146,25 +179,37 @@ api.getAppInfo().then(res => {
     }
   });
 
-
-  function handleOpenPlacePopup() {
-    newValidationPlace.resetForm();
-    placeNameInput.value = "";
-    placeLinkInput.value = "";
-    newPopupWithFormPlace.popupOpen();
-  };
-  addButton.addEventListener("click", () => handleOpenPlacePopup());
-  editButton.addEventListener("click", () => handleOpenProfilePopup());
-
-
   //Новый экземпляр класса попапа профиля
   const newPopupWithFormProfile = new PopupWithForm({
     popupSelector: ".popup_type_profile",
     handleFormSubmit: (data) => {
-      newUserInfo.setUserInfo(data);
+
+      api.editProfile(data).then(res => {
+        newUserInfo.setUserInfo(data);
+      })
+
+      // newUserInfo.setUserInfo(data);
       newPopupWithFormProfile.popupClose();
     },
   });
+
+  //Новый экземпляр класса попапа с аватаркой
+  const newPopupWithFormAvatar = new PopupWithForm({
+    popupSelector: ".popup_type_avatar",
+    handleFormSubmit: (data) => {
+      console.log(data);
+      api.patchAvatar(data).then(res => {
+        console.log(data.avatar);
+        newUserInfo.setUserAvatar(data.avatar)
+      })
+    }
+  })
+
+  //Новый экземпляр попапа с изображением
+  const newPopupWithImage = new PopupWithImage(".popup_type_picture");
+
+  //Новый экземпляр попапа с подтверждением отменя удаления карточки
+  const newPopupWithFormSubmit = new PopupWithFormSubmit(".popup_type_delete");
 
   //Обработчик для открытия попапа профиля
   function handleOpenProfilePopup(newUserInfo) {
@@ -174,128 +219,49 @@ api.getAppInfo().then(res => {
     newPopupWithFormProfile.popupOpen();
   }
 
-  const newPopupWithImage = new PopupWithImage(".popup_type_picture");
+  //Обработчик открытия попапа места
+  function handleOpenPlacePopup() {
+    newValidationPlace.resetForm();
+    placeNameInput.value = "";
+    placeLinkInput.value = "";
+    newPopupWithFormPlace.popupOpen();
+  }
+
+  //Обработчик открытия попапа аватарки
+  function handleOpenAvatarPopup() {
+    newValidationAvatar.resetForm();
+    newPopupWithFormAvatar.popupOpen();
+  }
+
+  //Установка слушателей событий на обработчики попапов
+  addButton.addEventListener("click", () => handleOpenPlacePopup());
+  editButton.addEventListener("click", () => handleOpenProfilePopup());
+  editButtonAvatar.addEventListener("click", () => handleOpenAvatarPopup());
 
 
   return {
     cardList,
     newPopupWithFormPlace,
     newPopupWithFormProfile,
-    newPopupWithImage
+    newPopupWithImage,
+    newPopupWithFormAvatar,
+    newPopupWithFormSubmit
   }
 
 }).then(res => {
   const {
     newPopupWithFormPlace,
     newPopupWithFormProfile,
-    newPopupWithImage
+    newPopupWithImage,
+    newPopupWithFormAvatar,
+    newPopupWithFormSubmit
   } = res
 
+  //Установка слушателей событий на экземпляры классов
   newPopupWithFormPlace.setEventListeners();
   newPopupWithFormProfile.setEventListeners();
   newPopupWithImage.setEventListeners();
+  newPopupWithFormSubmit.setEventListeners();
+  newPopupWithFormAvatar.setEventListeners();
 
 })
-
-
-// //Начальная загрузка карточек с сервера
-// api.getItems().then(result => {
-//     const cardList = new Section({
-//         items: result,
-//         renderer: (data) => {
-//           const card = new Card({
-//               data,
-//               handleCardClick: () => {
-//                 newPopupWithImage.popupOpen(data);
-//               },
-//             },
-//             ".card-template"
-//           );
-//           const cardElement = card.generateCard();
-//           cardList.addItem(cardElement);
-//         },
-//       },
-//       ".cards"
-//     );
-//     // const newUserInfo = new UserInfo({
-//     //   profileNameSelector: ".profile__title",
-//     //   profileJobSelector: ".profile__subtitle",
-//     // });
-//     cardList.renderItems();
-//     return cardList;
-//   })
-//   .then((cardList) => {
-//     console.log(cardList);
-//     const newPopupWithFormPlace = new PopupWithForm({
-//       popupSelector: ".popup_type_place",
-//       handleFormSubmit: (item) => {
-//         console.log(item);
-//         api.createItem(item)
-//           .then(res => {
-//             const card = new Card({
-//                 data: res,
-//                 handleCardClick: () => {
-//                   newPopupWithImage.popupOpen(res, ".popup_type_picture");
-//                 },
-//               },
-//               ".card-template"
-//             );
-//             const cardElement = card.generateCard();
-//             cardList.addNewItem(cardElement);
-//             newPopupWithFormPlace.popupClose();
-//           })
-//       }
-//     });
-//     newPopupWithFormPlace.setEventListeners();
-
-//     function handleOpenPlacePopup() {
-//       newValidationPlace.resetForm();
-//       placeNameInput.value = "";
-//       placeLinkInput.value = "";
-//       newPopupWithFormPlace.popupOpen();
-//     };
-//     addButton.addEventListener("click", () => handleOpenPlacePopup());
-//   });
-
-
-
-//Новый экземпляр класса с информацией о пользователе
-
-
-//Новый экземпляр класса попапа профиля
-// const newPopupWithFormProfile = new PopupWithForm({
-//   popupSelector: ".popup_type_profile",
-//   handleFormSubmit: (data) => {
-//     newUserInfo.setUserInfo(data);
-//     newPopupWithFormProfile.popupClose();
-//   },
-// });
-// newPopupWithFormProfile.setEventListeners();
-
-// //Обработчик для открытия попапа профиля
-// function handleOpenProfilePopup() {
-//   profileNameInput.value = title.textContent;
-//   profileJobInput.value = subtitle.textContent;
-//   newValidationProfile.resetForm();
-//   newPopupWithFormProfile.popupOpen();
-// }
-
-
-
-//Обработчик для открытия попапа места
-// function handleOpenPlacePopup() {
-//   newValidationPlace.resetForm();
-//   placeNameInput.value = "";
-//   placeLinkInput.value = "";
-//   newPopupWithFormPlace.popupOpen();
-// }
-
-//Новый экземпляр попапа с картинкой
-// const newPopupWithImage = new PopupWithImage(".popup_type_picture");
-// newPopupWithImage.setEventListeners();
-
-// // Слушатель для открытия попапа места (карточки)
-// addButton.addEventListener("click", () => handleOpenPlacePopup());
-
-// Слушатель для открытия попапа профиля
-// editButton.addEventListener("click", () => handleOpenProfilePopup());

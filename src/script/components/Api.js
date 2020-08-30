@@ -90,4 +90,12 @@ export class Api {
             })
     }
 
+    patchAvatar(data) {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar', {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(data)
+        });
+    }
+
 }

@@ -18,6 +18,7 @@ export class Card {
         this._handleCardDislike = handleCardDislike;
         this._handleCardDelete = handleCardDelete;
         this._userId = userId;
+        this._cardOwnerId = data.owner._id;
         this._cardSelector = cardSelector;
     }
 
@@ -69,6 +70,11 @@ export class Card {
         const cardPic = this._element.querySelector(".card__picture");
         cardPic.src = this._link;
         cardPic.alt = this._name;
+        if (this._cardOwnerId !== this._userId) {
+            console.log("!!!");
+            this._element.querySelector(".card__remove-button").classList.add("card__remove-button_mode_inactive")
+        };
+
         return this._element;
     }
 
