@@ -12,15 +12,20 @@ export class Api {
     }
 
     getItems() {
-        return fetch(this.baseUrl, {
+        return fetch(`${this.baseUrl}/cards`, {
                 headers: this.headers
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject('что-то не так!!')
+            })
     }
 
     deleteItem(id) {
         console.log(id);
-        return fetch(`${this.baseUrl}/${id}`, {
+        return fetch(`${this.baseUrl}/cards/${id}`, {
                 method: 'DELETE',
                 headers: this.headers
             })
@@ -34,28 +39,39 @@ export class Api {
     }
 
     createItem(item) {
-        return fetch(this.baseUrl, {
+        return fetch(`${this.baseUrl}/cards`, {
                 method: 'POST',
                 headers: this.headers,
                 body: JSON.stringify(item)
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject('что-то не так!!')
+            })
     }
 
     getUserInfo() {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
+        return fetch(`${this.baseUrl}/users/me`, {
                 headers: this.headers,
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject('что-то не так!!')
+            })
     }
 
     editProfile(item) {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
+        return fetch(`${this.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify(item)
         });
     }
+
     getAppInfo() {
         return Promise.all([this.getItems(), this.getUserInfo()])
     }
@@ -63,7 +79,7 @@ export class Api {
     likeCard(id) {
         console.log(id);
         console.log("сработал лайк в апи");
-        return fetch(`${this.baseUrl}/likes/${id}`, {
+        return fetch(`${this.baseUrl}/cards/likes/${id}`, {
                 method: 'PUT',
                 headers: this.headers
             })
@@ -78,7 +94,7 @@ export class Api {
     dislikeCard(id) {
         console.log(id);
         console.log("сработал дизлайк в апи");
-        return fetch(`${this.baseUrl}/likes/${id}`, {
+        return fetch(`${this.baseUrl}/cards/likes/${id}`, {
                 method: 'DELETE',
                 headers: this.headers
             })
@@ -91,11 +107,11 @@ export class Api {
     }
 
     patchAvatar(data) {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar', {
+        return fetch((`${this.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify(data)
-        });
+        }))
     }
 
-}
+};

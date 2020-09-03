@@ -20,24 +20,24 @@ export class PopupWithForm extends Popup {
     }
 
     setEventListeners() {
+        super.setEventListeners();
+
         this._popupForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
             const data = this._getInputValues();
             this._handleFormSubmit(data);
-            super.popupClose();
-            this._popupForm.reset();
         });
-        this._popup.addEventListener('click', (evt) => {
-            this._handleOverlayClose(evt)
-        });
+
         const closeButton =
             this._popup
             .querySelector(".popup__close-button");
-        closeButton.addEventListener("click", () => {
-            super.popupClose();
-            this._popupForm.reset();
-        });
+        closeButton.addEventListener("click", () => {});
     };
+
+    closePopupWithForm() {
+        super.popupClose();
+        this._popupForm.reset();
+    }
 
 
 

@@ -18,22 +18,10 @@ export class PopupWithFormSubmit extends Popup {
     setEventListeners() {
         this._popupForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            const submitButton = this._popup.querySelector('.popup__save-button');
-            // submitButton.textContent = 'Сохранение...';
             this._handleSubmitCallback();
-            super.popupClose();
-
         });
-        this._popup.addEventListener('click', (evt) => {
-            this._handleOverlayClose(evt)
-        });
-        const closeButton =
-            this._popup
-            .querySelector(".popup__close-button");
-        closeButton.addEventListener("click", () => {
-            super.popupClose();
+        super.setEventListeners()
 
-        })
     }
 
     activatePreload() {

@@ -3,6 +3,8 @@ export class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
         this._submitButton = this._popup.querySelector(".popup__save-button");
+        this._handleEscClose = this._handleEscClose.bind(this);
+
     }
     popupOpen() {
         this._popup.classList.add("popup_opened");
@@ -18,6 +20,7 @@ export class Popup {
             this.popupClose();
         }
     }
+
     _handleOverlayClose(evt) {
         if (evt.target === evt.currentTarget) {
             this.popupClose();
@@ -25,9 +28,7 @@ export class Popup {
     }
 
     setEventListeners() {
-        this._popup.addEventListener("keydown", () => {
-            this._handleEscClose()
-        });
+
         this._popup.querySelector('popup__big-picture')
         this._popup.addEventListener('click', (evt) => {
             this._handleOverlayClose(evt)
