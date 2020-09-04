@@ -93,6 +93,8 @@ api.getAppInfo().then(res => {
           handleCardLike: () => {
             api.likeCard(data._id).then(res => {
               card.updateLikes(res.likes);
+            }).catch((err) => {
+              console.log(err);
             })
           },
           handleCardDislike: () => {
@@ -109,6 +111,7 @@ api.getAppInfo().then(res => {
               newPopupWithFormSubmit.activatePreload();
               api.deleteItem(data._id).then(res => {
                   card._handleDeleteCard();
+                  newPopupWithFormSubmit.popupClose();
                 })
                 .then(res => {
                   newPopupWithFormSubmit.disablePreload();
@@ -116,7 +119,6 @@ api.getAppInfo().then(res => {
                 .catch((err) => {
                   console.log(err);
                 })
-              newPopupWithFormSubmit.popupClose();
             })
 
           },
@@ -153,7 +155,7 @@ api.getAppInfo().then(res => {
         api.createItem(item)
           .then(res => {
             makeCardFunction(res, true);
-            newPopupWithFormPlace.closePopupWithForm();
+            newPopupWithFormPlace.popupClose();
             newPopupWithFormPlace.disablePreload();
           })
           .catch((err) => {
@@ -169,14 +171,14 @@ api.getAppInfo().then(res => {
         newPopupWithFormProfile.activatePreload();
         api.editProfile(data).then(res => {
             newUserInfo.setUserInfo(data);
+          }).then(res => {
+            newPopupWithFormProfile.popupClose();
+            newPopupWithFormProfile.disablePreload();
           })
           .catch((err) => {
             console.log(err);
           })
-        newPopupWithFormProfile.closePopupWithForm();
-        newPopupWithFormProfile.disablePreload();
-      },
-
+      }
     });
 
     //Новый экземпляр класса попапа с аватаркой
@@ -189,15 +191,14 @@ api.getAppInfo().then(res => {
             newUserInfo.setUserAvatar(data.avatar)
           })
           .then(res => {
-            newPopupWithFormAvatar.closePopupWithForm();
+            newPopupWithFormAvatar.popupClose();
             newPopupWithFormAvatar.disablePreload();
           })
           .catch((err) => {
             console.log(err);
           })
-      },
-
-    })
+      }
+    });
 
     //Новый экземпляр попапа с изображением
     const newPopupWithImage = new PopupWithImage(".popup_type_picture");

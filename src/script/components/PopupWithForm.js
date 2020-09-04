@@ -27,14 +27,9 @@ export class PopupWithForm extends Popup {
             const data = this._getInputValues();
             this._handleFormSubmit(data);
         });
+    }
 
-        const closeButton =
-            this._popup
-            .querySelector(".popup__close-button");
-        closeButton.addEventListener("click", () => {});
-    };
-
-    closePopupWithForm() {
+    popupClose() {
         super.popupClose();
         this._popupForm.reset();
     }

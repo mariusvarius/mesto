@@ -29,7 +29,6 @@ export class Popup {
 
     setEventListeners() {
 
-        this._popup.querySelector('popup__big-picture')
         this._popup.addEventListener('click', (evt) => {
             this._handleOverlayClose(evt)
         });

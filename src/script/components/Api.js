@@ -107,11 +107,16 @@ export class Api {
     }
 
     patchAvatar(data) {
-        return fetch((`${this.baseUrl}/users/me/avatar`, {
+        return fetch(`${this.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify(data)
-        }))
+        }).then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            return Promise.reject('что-то не так!')
+        })
     }
 
 };
